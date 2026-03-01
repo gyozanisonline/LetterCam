@@ -3,18 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Grid</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Roboto:wght@100..900&family=Open+Sans:wght@100..900&family=Lato:wght@100..900&family=Poppins:wght@100..900&family=Montserrat:wght@100..900&display=swap">
+    <title>LetterCam</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Roboto:wght@100..900&family=Open+Sans:wght@100..900&family=Lato:wght@100..900&family=Poppins:wght@100..900&family=Montserrat:wght@100..900&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+Hebrew:wght@100..900&family=Noto+Sans+Arabic:wght@100..900&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Top-left: video source + recording + snapshot -->
     <div class="input-container">
         <button id="toggleInput">Switch Video Source</button>
         <input type="file" id="videoFile" accept="video/*" style="display: none;">
+        <!-- recordButton and snapshotButton injected by JS -->
     </div>
 
+    <!-- Top-right: character set + font selectors -->
+    <div class="char-container">
+        <div class="char-row">
+            <label for="char-set-select">Characters:</label>
+            <select id="char-set-select">
+                <option value="english">A–Z English</option>
+                <option value="hebrew">Hebrew אבג</option>
+                <option value="katakana">Katakana アイウ</option>
+                <option value="arabic">Arabic ابت</option>
+                <option value="symbols">Symbols ╬▓◆</option>
+                <option value="binary">Binary 01</option>
+            </select>
+        </div>
+        <div class="char-row">
+            <label for="font-select">Font:</label>
+            <select id="font-select">
+                <option value="Heebo">Heebo</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Noto Sans JP">Noto Sans JP</option>
+                <option value="Noto Sans Hebrew">Noto Sans Hebrew</option>
+                <option value="Noto Sans Arabic">Noto Sans Arabic</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Sliders panel (scrolled to below the viewport) -->
     <div class="slider-container">
         <h2>Grid Controls</h2>
         <div class="slider-group">
@@ -53,7 +85,7 @@
         <h2>Advanced Controls</h2>
         <div class="slider-group">
             <div>
-                <label for="animation-direction-slider">Animation Direction:</label>
+                <label for="animation-direction-slider">Animation Wave:</label>
                 <input type="range" id="animation-direction-slider" min="-1" max="1" value="0" step="0.1">
             </div>
             <div>
@@ -63,6 +95,10 @@
             <div>
                 <label for="font-weight-slider">Font Weight:</label>
                 <input type="range" id="font-weight-slider" min="100" max="900" value="400" step="100">
+            </div>
+            <div>
+                <label for="trail-decay-slider">Trail Decay:</label>
+                <input type="range" id="trail-decay-slider" min="0.05" max="1" value="1" step="0.05">
             </div>
         </div>
     </div>
