@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Grid</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@100..900&family=Roboto:wght@100..900&family=Open+Sans:wght@100..900&family=Lato:wght@100..900&family=Poppins:wght@100..900&family=Montserrat:wght@100..900&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <div class="input-container">
+        <button id="toggleInput">Switch Video Source</button>
+        <input type="file" id="videoFile" accept="video/*" style="display: none;">
+    </div>
+
+    <div class="slider-container">
+        <h2>Grid Controls</h2>
+        <div class="slider-group">
+            <div>
+                <label for="resolution-slider">Resolution:</label>
+                <input type="range" id="resolution-slider" min="5" max="50" value="20" step="1">
+            </div>
+            <div>
+                <label for="letter-size-slider">Letter Size:</label>
+                <input type="range" id="letter-size-slider" min="10" max="50" value="20" step="1">
+            </div>
+            <div>
+                <label for="motion-sensitivity-slider">Motion Sensitivity:</label>
+                <input type="range" id="motion-sensitivity-slider" min="1" max="50" value="15" step="1">
+            </div>
+            <div>
+                <label for="color-speed-slider">Color Speed:</label>
+                <input type="range" id="color-speed-slider" min="1" max="100" value="30" step="1">
+            </div>
+        </div>
+        <h2>Color Controls</h2>
+        <div class="slider-group">
+            <div>
+                <label for="hue-slider">Hue Shift:</label>
+                <input type="range" id="hue-slider" min="0" max="360" value="0" step="1">
+            </div>
+            <div>
+                <label for="saturation-slider">Saturation:</label>
+                <input type="range" id="saturation-slider" min="0" max="100" value="100" step="1">
+            </div>
+            <div>
+                <label for="scatter-frequency-slider">Scatter Frequency:</label>
+                <input type="range" id="scatter-frequency-slider" min="1" max="20" value="2" step="1">
+            </div>
+        </div>
+        <h2>Advanced Controls</h2>
+        <div class="slider-group">
+            <div>
+                <label for="animation-direction-slider">Animation Direction:</label>
+                <input type="range" id="animation-direction-slider" min="-1" max="1" value="0" step="0.1">
+            </div>
+            <div>
+                <label for="grid-opacity-slider">Grid Opacity:</label>
+                <input type="range" id="grid-opacity-slider" min="0.1" max="1" value="1" step="0.1">
+            </div>
+            <div>
+                <label for="font-weight-slider">Font Weight:</label>
+                <input type="range" id="font-weight-slider" min="100" max="900" value="400" step="100">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
