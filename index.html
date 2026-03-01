@@ -46,6 +46,19 @@
         </div>
     </div>
 
+    <!-- Keyboard shortcuts help overlay -->
+    <div id="help-overlay" class="hidden">
+        <div id="help-box">
+            <div class="help-title">Keyboard Shortcuts</div>
+            <div class="help-row"><span class="help-key">S</span> Snapshot</div>
+            <div class="help-row"><span class="help-key">R</span> Toggle Recording</div>
+            <div class="help-row"><span class="help-key">M</span> Mirror</div>
+            <div class="help-row"><span class="help-key">I</span> Invert brightness</div>
+            <div class="help-row"><span class="help-key">1–6</span> Switch character set</div>
+            <div class="help-row"><span class="help-key">?</span> Toggle this help</div>
+        </div>
+    </div>
+
     <!-- Sliders panel (scrolled to below the viewport) -->
     <div class="slider-container">
         <h2>Grid Controls</h2>
@@ -99,6 +112,36 @@
             <div>
                 <label for="trail-decay-slider">Trail Decay:</label>
                 <input type="range" id="trail-decay-slider" min="0.05" max="1" value="1" step="0.05">
+            </div>
+            <div>
+                <label for="fps-slider">FPS Limit:</label>
+                <input type="range" id="fps-slider" min="1" max="60" value="60" step="1">
+            </div>
+        </div>
+        <h2>Modes</h2>
+        <div class="slider-group">
+            <div>
+                <label for="color-theme-select">Color Theme:</label>
+                <select id="color-theme-select">
+                    <option value="video">Video (original)</option>
+                    <option value="mono">Monochrome</option>
+                    <option value="matrix">Matrix (green)</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="fire">Fire</option>
+                    <option value="neon">Neon blue</option>
+                </select>
+            </div>
+            <div>
+                <label>Mirror:</label>
+                <button id="mirror-btn" class="mode-btn">Off</button>
+            </div>
+            <div>
+                <label>Invert brightness:</label>
+                <button id="invert-btn" class="mode-btn">Off</button>
+            </div>
+            <div>
+                <label>Help (?):</label>
+                <button id="help-btn" class="mode-btn">Show</button>
             </div>
         </div>
     </div>
