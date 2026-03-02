@@ -146,6 +146,41 @@
         </div>
     </div>
 
+    <!-- Overlay section injected below slider-container by JS -->
+    <div class="slider-container" id="overlay-container">
+        <h2>Overlay</h2>
+        <div class="overlay-source-row">
+            <span class="slider-group label" style="color:white;font-family:'Heebo',sans-serif;font-size:12px;">Source:</span>
+            <button class="mode-btn active" id="overlay-none-btn">None</button>
+            <button class="mode-btn" id="overlay-webcam-btn">Webcam</button>
+            <button class="mode-btn" id="overlay-file-btn">Video File</button>
+            <input type="file" id="overlayFile" accept="video/*" style="display:none;">
+        </div>
+        <div class="slider-group" style="margin-top:10px;">
+            <div>
+                <label for="blend-mode-select">Blend Mode:</label>
+                <select id="blend-mode-select">
+                    <option value="source-over">Normal</option>
+                    <option value="multiply">Multiply</option>
+                    <option value="screen">Screen</option>
+                    <option value="overlay">Overlay</option>
+                    <option value="difference">Difference</option>
+                    <option value="exclusion">Exclusion</option>
+                    <option value="color-dodge">Color Dodge</option>
+                    <option value="color-burn">Color Burn</option>
+                    <option value="soft-light">Soft Light</option>
+                    <option value="hard-light">Hard Light</option>
+                    <option value="luminosity">Luminosity</option>
+                    <option value="hue">Hue</option>
+                </select>
+            </div>
+            <div>
+                <label for="overlay-opacity-slider">Overlay Opacity:</label>
+                <input type="range" id="overlay-opacity-slider" min="0.05" max="1" value="0.5" step="0.05">
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

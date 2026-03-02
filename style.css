@@ -137,6 +137,27 @@ canvas {
     width: 70%;
 }
 
+/* ── Overlay source row ───────────────────────────────────────────────────── */
+.overlay-source-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+/* ── Blend mode select ────────────────────────────────────────────────────── */
+#blend-mode-select {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    background: #444;
+    color: white;
+    font-family: 'Heebo', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 /* ── Mode buttons (Mirror / Invert / Help) ────────────────────────────────── */
 .mode-btn {
     padding: 4px 12px;

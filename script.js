@@ -111,6 +111,72 @@ function syncOffCanvas() {
     }
 }
 
+// ── Overlay system ────────────────────────────────────────────────────────────
+const overlayNoneBtn   = document.getElementById('overlay-none-btn');
+const overlayWebcamBtn = document.getElementById('overlay-webcam-btn');
+const overlayFileBtn   = document.getElementById('overlay-file-btn');
+const overlayFileInput = document.getElementById('overlayFile');
+const blendModeSelect  = document.getElementById('blend-mode-select');
+const overlayOpacitySlider = document.getElementById('overlay-opacity-slider');
+
+const videoOverlay = document.createElement('video');
+videoOverlay.autoplay    = true;
+videoOverlay.playsInline = true;
+videoOverlay.loop        = true;
+videoOverlay.muted       = true;
+
+let overlaySource    = 'none';
+let overlayWebcamStream = null;
+
+function setOverlaySourceBtn(active) {
+    [overlayNoneBtn, overlayWebcamBtn, overlayFileBtn].forEach(b => b.classList.remove('active'));
+    active.classList.add('active');
+}
+
+function clearOverlay() {
+    if (overlayWebcamStream) {
+        overlayWebcamStream.getTracks().forEach(t => t.stop());
+        overlayWebcamStream = null;
+    }
+    if (videoOverlay.srcObject) { videoOverlay.srcObject = null; }
+    const oldSrc = videoOverlay.src;
+    if (oldSrc) { videoOverlay.src = ''; URL.revokeObjectURL(oldSrc); }
+    overlaySource = 'none';
+}
+
+overlayNoneBtn.addEventListener('click', () => {
+    clearOverlay();
+    setOverlaySourceBtn(overlayNoneBtn);
+});
+
+overlayWebcamBtn.addEventListener('click', () => {
+    clearOverlay();
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            overlayWebcamStream = stream;
+            videoOverlay.srcObject = stream;
+            overlaySource = 'webcam';
+            setOverlaySourceBtn(overlayWebcamBtn);
+        })
+        .catch(err => console.error('Overlay webcam error:', err));
+});
+
+overlayFileBtn.addEventListener('click', () => {
+    overlayFileInput.value = '';
+    overlayFileInput.click();
+});
+
+overlayFileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    clearOverlay();
+    const url = URL.createObjectURL(file);
+    videoOverlay.src  = url;
+    videoOverlay.play().catch(() => {});
+    overlaySource = 'file';
+    setOverlaySourceBtn(overlayFileBtn);
+});
+
 // ── Video element ─────────────────────────────────────────────────────────────
 const video = document.createElement('video');
 video.autoplay    = true;
@@ -118,8 +184,12 @@ video.playsInline = true;
 let previousFrameData = null;
 
 toggleButton.addEventListener('click', () => {
-    if (isUsingWebcam) videoFileInput.click();
-    else setupWebcam();
+    if (isUsingWebcam) {
+        videoFileInput.value = ''; // reset so picking the same file again fires 'change'
+        videoFileInput.click();
+    } else {
+        setupWebcam();
+    }
 });
 
 videoFileInput.addEventListener('change', (e) => {
@@ -352,7 +422,7 @@ function animate(timestamp = 0) {
 
     syncOffCanvas();
 
-    // Feature 6a: mirror — flip the offscreen context before drawing video
+    // Draw primary source (with optional mirror)
     offCtx.save();
     if (isMirrored) {
         offCtx.translate(cols, 0);
@@ -360,6 +430,15 @@ function animate(timestamp = 0) {
     }
     offCtx.drawImage(video, 0, 0, cols, rows);
     offCtx.restore();
+
+    // Overlay blend — composite second source on top of primary
+    if (overlaySource !== 'none' && videoOverlay.readyState >= 2) {
+        offCtx.globalAlpha = parseFloat(overlayOpacitySlider.value);
+        offCtx.globalCompositeOperation = blendModeSelect.value;
+        offCtx.drawImage(videoOverlay, 0, 0, cols, rows);
+        offCtx.globalAlpha = 1;
+        offCtx.globalCompositeOperation = 'source-over';
+    }
 
     const currentFrameData = offCtx.getImageData(0, 0, cols, rows).data;
     const motionMap = detectMotion(currentFrameData, previousFrameData);
